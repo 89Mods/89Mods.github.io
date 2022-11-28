@@ -46,21 +46,11 @@ body {
 
 .reg-mnemonic {
 	text-align: center;
-	width: 54.4375%;
 }
 
 .reg-name {
 	background: white;
 	color: black;
-	width: 33%;
-}
-
-.reg-cc {
-	width: 8.375%;
-}
-
-.reg-c {
-	width: 4.1875%;
 }
 
 .pc-mnemonic {

@@ -53,6 +53,10 @@ body {
 	color: black;
 }
 
+.reg-c {
+	text-align: center;;
+}
+
 .pc-mnemonic {
 	text-align: center;
 	width: 67%;
@@ -74,4 +78,84 @@ body {
 	background: white;
 	color: black;
 	width: 99%;
+}
+
+.formats-table {
+	background: #eee;
+	color: black;
+	border-radius: 1px solid;
+	border-color: #333;
+	border-collapse: collapse;
+	text-align: center;
+}
+
+.formats-table * tr th, .formats-table * tr td {
+	border: 1px solid #333;
+	padding: 0.2em 0.4em;
+}
+
+.formats-table .reg {
+	background: #dfd;
+}
+
+.formats-table .dest {
+	background: #ffb7b7;
+}
+
+.formats-table .op {
+	background: #fffdd0;
+}
+
+.formats-table .funct {
+	background: #ffcbdb;
+}
+
+.formats-table .imm {
+	background: #def;
+}
+
+.formats-table .predicate {
+	background: #fed;
+}
+
+.formats-table .nop {
+	background: grey;
+}
+
+.instructions-table {
+	background: #eee;
+	color: black;
+	border-radius: 1px solid;
+	border-color: #333;
+	border-collapse: collapse;
+	text-align: center;
+}
+
+.instructions-table * tr th, .instructions-table * tr td {
+	border: 1px solid #333;
+	padding: 0.2em 0.4em;
+}
+
+.instructions-table .r-type {
+	background: #dfd;
+}
+
+.instructions-table .i-type {
+	background: #def;
+}
+
+.instructions-table .m-type {
+	background: #ffb7b7;
+}
+
+.instructions-table .b-type {
+	background: #ffcbdb;
+}
+
+.instructions-table .j-type {
+	background: #fffdd0;
+}
+
+.instructions-table .pr-type {
+	background: #fed;
 }

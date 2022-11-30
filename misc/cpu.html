@@ -680,8 +680,7 @@
 	<p>Shifts the value of rs1 right by the amount specified in rs2. The carry bit will be placed into the least-significant vacant bit, while the rest are filled with zeroes. The most-significant evicted bit becomes the new carry. The result is stored in dst.</p>
 	<h4 style="font-family: monospace, monospace;">SLC</h4>
 	<p>Shifts the value of rs1 left by the amount specified in rs2. The carry bit will be placed into the most-significant vacant bit, while the rest are filled with zeroes. The least-significant evicted bit becomes the new carry. The result is stored in dst.</p>
-	<h4>4.4. Arithmetic modifiers</h4>
-	<h4>4.5. Predicate instructions</h4>
+	<h4>4.4. Predicate instructions</h4>
 	<p>Predicate instructions are those that are used to set the state of the predicate registers. Of note is that these instructions can themselves be predicated, allowing complex code branches to be simplified through predication.<br>Unlike other instructions in the architecture 'dst' in a predicate instruction is a 3-bit pointer into the predicate register space, instead of a 6-bit pointer into data register space. All predicate instructions do still operate on a pair of rs1 and rs2 registers, however, as most of them perform comparisons. rs1 and rs2 can be set to reference r0 in the case of <code>spc</code>, <code>spnc</code>, <code>spf</code> and <code>spt</code>.<br>All predicate instructions will decide on wether or not to 'set' dst. If it is set, its value becomes True, otherwise it is reset to False.</p>
 	<h4 style="font-family: monospace, monospace;">SPC / SPNC</h4>
 	<p>Set a predicate based on the carry flag. <code>spc</code> sets if carry = 1, <code>spnc</code> sets if carry = 0.</p>
@@ -695,7 +694,7 @@
 	<p>Always resets the specified predicate to False.</p>
 	<h4 style="font-family: monospace, monospace;">SPT</h4>
 	<p>Always sets the specified predicate to True.</p>
-	<h4>4.6. Memory instructions</h4>
+	<h4>4.5. Memory instructions</h4>
 	<p>Memory instructions are the only type of instruction capable of accessing main memory. They transfer data in and out of the data registers. All of them use a register, rs1, as the base address and also have a dst register as the source or destination for the loaded/stored data. A signed 17-bit immediate value is added onto the base address to obtain the effective address. This means memory within a range of ±64KW relative to the base address can be accessed.<br><br>The accumulating modifier can be applied to the load instructions, allowing loaded values to be directly added onto registers. This is once again indicated in the instruction mnemonic using a leading 'A'.<br><br>16-bit loads or stores may occur at any address, but 32-bit loads or stores must have even addresses. This is enforced by the processor ignoring the 0th bit of the effective address.</p>
 	<h4 style="font-family: monospace, monospace;">LD</h4>
 	<p>Load a 32-bit value from memory into dst.</p>
@@ -713,7 +712,7 @@
 	<p>Store the signed 16-bit value of dst into memory. dst’s value is reduced to a 16-bit integer, while preserving the sign of the number. Only these 16 bits are stored.</p>
 	<h4 style="font-family: monospace, monospace;">PUSH</h4>
 	<p>Store the 32-bit value of dst into memory. In parallel to this operation, a 1 is substracted from the value of rs1, and stored back into rs1, decrementing the register.</p>
-	<h4>4.7. Branch instructions</h4>
+	<h4>4.6. Branch instructions</h4>
 	<p>Branch instructions encode a short branch relative to the program counter, which is always dependent on some condition (with the exception of <code>br</code>). The effective address is computed by adding a immediate value onto pc. Since branches must go to a address divisible by 2, the 17-bit signed immediate value encoded in the instruction is automatically multiplied by 2, allowing branches to memory within a range of ±128KW relative to pc. This alignment is enforced by the effective address’ least significant bit being cleared before the branch is taken.<br><br>Every branch instruction will take in two registers, rs1 and rs2, as most of them decide wether to branch depending on a comparison between two registers. rs1 and rs2 can be set to r0 in the case of <code>brc</code>, <code>brnc</code> and <code>br</code>.<br><br>If a branch instruction’s condition fails, it will not affect the value of pc. The instruction will be skipped, the instruction following the branch will be executed.<br><br>All branch instructions will back up the address of the instruction following the branch instruction into register r1. This means that all branch instructions are simulatinously subroutine call instructions. If a subroutine itself contains branches (i.e. for a loop), it only need to copy the value of r1 to a different register.</p>
 	<h4 style="font-family: monospace, monospace;">BRC / BRNC</h4>
 	<p>Branches depending on the state of the carry bit. <code>brc</code> branches if carry = 1, <code>brnc</code> branches if carry = 0.</p>
@@ -725,7 +724,7 @@
 	<p>Branches depending on a comparison between rs1 and rs2. <code>brg</code> branches if rs1 > rs2, <code>brng</code> branches if rs1 ≤ rs2.</p>
 	<h4 style="font-family: monospace, monospace;">BR</h4>
 	<p>Branch unconditionally.</p>
-	<h4>4.8. Jump instructions</h4>
+	<h4>4.7. Jump instructions</h4>
 	<p>There are two instructions in AA32 that are capable of moving program execution to anywhere within the address space.<br>Similar to memory instructions, they determine the effective address of the jump from a base address taken form a register rs1, added with a 17-bit immediate. However, like the branch instructions, the 17-bit immediate is multiplied by 2 automatically, and the alignment is enforced by the effective address’ least significant bit being cleared before the jump is taken.<br>Jumps may also be relative to the program counter, in which case pc is added onto the effective address.<br><br>Jumps cannot be conditional, but just like branch instructions, jumps will also back up the address of the instruction following the jump instruction to r1, with the exception of <code>reti</code>, which does not modify r1. <code>jmp</code> in particular can be used for subroutine returns by specifying r1 as the base address, with an offset of 0.</p>
 	<h4 style="font-family: monospace, monospace;">JMP</h4>
 	<p>Unconditional jump to an absolute address.</p>
@@ -733,7 +732,7 @@
 	<p>Unconditional jump to a pc-relative address.</p>
 	<h4 style="font-family: monospace, monospace;">IRET</h4>
 	<p>Unconditional jump to an absolute address. Ignores the immediate offset and rs1, instead using the value of the SR pc' as the jump target.</p>
-	<h4>4.9. Comparison instructions</h4>
+	<h4>4.8. Comparison instructions</h4>
 	<p>A special set of instructions that runs a comparison between two values, and sets or resets a register depending on the result. Every comparison instruction will take in two registers, rs1 and rs2, and have a destination register dst. The instruction will compare rs1 and rs2, and decide wether or not to 'set' dst. If it decides to set, dst will be loaded with the value 1, otherwise it will be loaded with a value of 0. rs1 and rs2 can be set to r0 for <code>set</code> and <code>clr</code>, which do not require them.<br><br>Except <code>set</code> and </code>clr</code>, all of these instructions can have the immediate modifier, once again indicated in the mnemonic by a trailing 'I', in which case rs2 will be replaced by a 16-bit immediate value in the comparison. Depending on the state of the UL bit, this immediate will either be treated as a 16-bit number (UL = 0), or shifted left by 16 bits into a 32-bit number (UL = 1).</p>
 	<h4 style="font-family: monospace, monospace;">SE / SNE</h4>
 	<p>Sets dst depending on a comparison between rs1 and rs2. <code>se</code> sets if rs1 = rs2, <code>sne</code> sets if rs1 ≠ rs2.</p>
@@ -745,7 +744,7 @@
 	<p>Always sets dst to 1.</p>
 	<h4 style="font-family: monospace, monospace;">CLR</h4>
 	<p>Always clears dst to 0.</p>
-	<h4>4.10. Miscelanious instructions</h4>
+	<h4>4.9. Miscelanious instructions</h4>
 	<p>Instructions that do not fit into any of the above categories.</p>
 	<h4 style="font-family: monospace, monospace;">NOP</h4>
 	<p>No operation is performed. The instruction is skipped, and the one following it is executed.</p>

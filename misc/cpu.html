@@ -189,13 +189,15 @@
 	<p>AA32 has 128 possible interrupts, as encoded in the <code>trap</code> instruction. Upon execution of a trap instruction, the processor will branch to the requested interrupt number, multiplied by 8. Unlike a regular branch, the return address will be backed up in the SR pc'. A <code>iret</code> instruction must be used to restore pc from pc', and return program execution to the previous location. As the system starts up with interrupts disabled, <code>trap 0</code> may be used as a way to trigger a software reset.<br>Interrupts will be automatically disabled by the trap instruction, and can be re-enabled by writing to the <code>ien</code> register.</p><p>Upon reception of an interrupt signal, the current instruction execution is completed, and the <code>IACK</code> signal will be asserted by the hardware. The processor will then read one 7-bit word from the system bus, before injecting a <code>trap</code> instruction in the instruction stream, with the interrupt number set to the 7-bits received on the bus. This allows for 128 vectored system interrupts.</p>
 	<h2>4. Instruction set</h2>
 	<h4>4.1. Instruction types and encoding</h4>
-	<p>AA32 features 5 main types of instructions: Register/register (R), Immediate (I), Predicate-management (P), Memory (M), Branch (B) and Jump (J). Every instruction has a fixed length of 42-bits¹, loaded LSB first in two 32-bit data fetches, truncated to 42-bit. All instructions except M-type will operate only on the CPU registers. Only being able to access main memory through M-type load/store instructions makes AA32 a Load/Store class architecture.</p>
+	<p>AA32 features 5 main types of instructions: Register/register (R), Immediate (I), Predicate-management (P), Memory (M), Branch (B) and Jump (J). Every instruction has a fixed length of 42-bits, loaded LSB first in two 32-bit data fetches, truncated to 42-bit. All instructions except M-type will operate only on the CPU registers. Only being able to access main memory through M-type load/store instructions makes AA32 a Load/Store class architecture.</p>
 	<p>
 	All instructions must begin with an 8-bit opcode, followed by a three bit pointer into the predicate register set. The instruction will only execute if the pointed to predicate is True. If it is not, instruction execution is aborted, and the instruction following the current one is loaded.<br>
 	This information is followed by the specific argument required by the instruction type. See the table below for a complete list.
 	</p>
 	<br>
-	<p>¹<small>This instruction length was chosen as the most optimal instruction length for the eventual AA32VL architecture, and so used in this predecesor arch.</small></p>
+	<div class="alert alert-warning disclaimer" role="alert">
+		<p>The odd instruction length was chosen as the most optimal instruction length for the eventual AA32VL architecture, and so used in this predecessor arch.</p>
+	</div>
 	<table class="formats-table">
 		<tbody>
 			<tr>

@@ -51,10 +51,7 @@ body {
 .reg-name {
 	background: white;
 	color: black;
-}
-
-.reg-c {
-	text-align: center;;
+	width: 33%;
 }
 
 .pc-mnemonic {
@@ -129,6 +126,7 @@ body {
 	border-color: #333;
 	border-collapse: collapse;
 	text-align: center;
+	font-family: monospace, monospace;
 }
 
 .instructions-table * tr th, .instructions-table * tr td {
@@ -158,4 +156,17 @@ body {
 
 .instructions-table .pr-type {
 	background: #fed;
+}
+
+.sr-table {
+	background: #eee;
+	color: black;
+	border-radius: 1px solid;
+	border-color: #333;
+	border-collapse: collapse;
+}
+
+.sr-table * tr th, .sr-table * tr td {
+	border: 1px solid #333;
+	padding: 0.2em 0.4em;
 }

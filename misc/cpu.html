@@ -181,7 +181,7 @@
 		<tr>
 			<th style="text-align: center;">000Bh</th>
 			<th style="text-align: center;">pc'</th>
-			<th>Set to the previous value of pc during a trap instruction, and used by iret to return from an interrupt handler. Read-only.</th>
+			<th>Set to the previous value of pc during a trap instruction, and used by iret to return from an interrupt handler. Writeable to allow interrupts to stack.</th>
 		</tr>
 	</tbody>
 	</table>
@@ -731,7 +731,7 @@
 	<h4 style="font-family: monospace, monospace;">JR</h4>
 	<p>Unconditional jump to a pc-relative address.</p>
 	<h4 style="font-family: monospace, monospace;">IRET</h4>
-	<p>Unconditional jump to an absolute address. Ignores the immediate offset and rs1, instead using the value of the SR pc' as the jump target.</p>
+	<p>Unconditional jump to an absolute address. Ignores the immediate offset and rs1, instead using the value of the SR pc' as the jump target. Also sets <code>ien</code> to re-enable interrupts.</p>
 	<h4>4.8. Comparison instructions</h4>
 	<p>A special set of instructions that runs a comparison between two values, and sets or resets a register depending on the result. Every comparison instruction will take in two registers, rs1 and rs2, and have a destination register dst. The instruction will compare rs1 and rs2, and decide wether or not to 'set' dst. If it decides to set, dst will be loaded with the value 1, otherwise it will be loaded with a value of 0. rs1 and rs2 can be set to r0 for <code>set</code> and <code>clr</code>, which do not require them.<br><br>Except <code>set</code> and </code>clr</code>, all of these instructions can have the immediate modifier, once again indicated in the mnemonic by a trailing 'I', in which case rs2 will be replaced by a 16-bit immediate value in the comparison. Depending on the state of the UL bit, this immediate will either be treated as a 16-bit number (UL = 0), or shifted left by 16 bits into a 32-bit number (UL = 1).</p>
 	<h4 style="font-family: monospace, monospace;">SE / SNE</h4>
